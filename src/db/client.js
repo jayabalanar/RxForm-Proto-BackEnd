@@ -5,7 +5,8 @@ const client = new Pool({
     host: process.env.host,
     port: process.env.port,
     database: process.env.database,
-    password: process.env.password
+    password: process.env.password,
+    ssl: true
 })
 // const client = new Pool({
 //     user: "postgres",
