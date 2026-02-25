@@ -1,9 +1,12 @@
+
 const client = require("./db/client");
 const express = require("express")
 const cors = require("cors")
 const { randomUUID } = require("crypto")
 
 const app = express()
+
+require("dotenv").config()
 
 app.use(cors())
 app.use(express.json())

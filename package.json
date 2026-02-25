@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "npm run dev",
+    "dev": "node src\\app.js",
     "build": "esbuild src/app.js --bundle --platform=node --outfile=dist/app.js --format=esm"
   },
   "dependencies": {
