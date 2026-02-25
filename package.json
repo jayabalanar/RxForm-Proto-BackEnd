@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev": "npm run dev",
+    "build": "esbuild src/app.js --bundle --platform=node --outfile=dist/app.js --format=esm"
+  },
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
