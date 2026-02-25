@@ -1,10 +1,9 @@
 {
   "scripts": {
-    "dev": "node src\\app.js",
+    "dev": "node src/app.js",
     "build": "esbuild src/app.js --bundle --platform=node --outfile=dist/app.js --format=esm"
   },
   "dependencies": {
-    "esbuild": "0.27.3",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "crypto": "^1.0.1",
