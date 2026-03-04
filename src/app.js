@@ -103,11 +103,11 @@ app.post("/send-form-email", async (req, res) => {
         message: "Missing required field: formId",
       });
     }
-    const toEmail = process.env.VITE_EMAIL_TO;
+    const toEmail = process.env.EMAIL_TO;
     if (!toEmail) {
       return res.status(400).json({
         success: false,
-        message: "Missing recipient: provide 'to' in body or set EMAIL_TO / VITE_EMAIL_TO",
+        message: "Missing recipient: provide 'to' in body or set EMAIL_TO / EMAIL_TO",
       });
     }
     let formData = await client.query(`SELECT form_data FROM RxForm WHERE form_id = $1`, [formId]);

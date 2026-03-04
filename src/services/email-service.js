@@ -3,10 +3,10 @@ const puppeteer = require('puppeteer');
 const generateRxFormHTML = require('../template/rxFormTemplate');
 
 const EMAIL_CONFIG = {
-    ENABLED: process.env.VITE_EMAIL_ENABLED !== 'false',
-    FROM: process.env.VITE_EMAIL_FROM || 'RxForms <noreply@rxforms.com>',
-    AWS_REGION:  process.env.VITE_AWS_REGION || 'us-east-1',
-    FRONTEND_URL: process.env.VITE_FRONTEND_URL || 'https://rxforms-dev.claritytechlabs.com',
+    ENABLED: process.env.EMAIL_ENABLED !== 'false',
+    FROM: process.env.EMAIL_FROM || 'RxForms <noreply@rxforms.com>',
+    AWS_REGION:  process.env.AWS_REGION || 'us-east-1',
+    FRONTEND_URL: process.env.FRONTEND_URL || 'https://rxforms-dev.claritytechlabs.com',
 };
 
 /**
