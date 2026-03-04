@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "node src/app.js",
-    "build": "esbuild src/app.js --bundle --platform=node --outfile=dist/app.js --format=esm"
+    "build": "esbuild src/app.js --bundle --platform=node --format=esm --outfile=dist/app.js --packages=external --target=node22"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.1000.0",
