@@ -113,17 +113,30 @@ app.post("/send-form-email", async (req, res) => {
     let formData = await client.query(`SELECT form_data FROM RxForm WHERE form_id = $1`, [formId]);
     console.log(formData);
     console.log(formData.rows[0].form_data);
-    let res = await sendApprovalEmail(toEmail, formData.rows[0].form_data);
-    console.log(res);
-    if(res){
-      let status = res.httpStatusCode;
-      if(status == 200){
-        return { success: true, message: "Email sent", data: res };
+    try {
+      const emailResult = await sendApprovalEmail(toEmail, formData.rows[0].form_data);
+      const status = emailResult?.$metadata?.httpStatusCode;
+      console.log("status", status);
+      if (status == 200) {
+        return res.status(200).json({
+          success: true,
+          message: "Email sent",
+          data: emailResult,
+        });
       } else {
-        return { success: false, message: "Failed to send email", data: res };
+        return res.status(400).json({
+          success: false,
+          message: "Failed to send email",
+          error: emailResult.error,
+        });
       }
-    } else {
-      return { success: false, message: "Failed to send email", data: res };
+    } catch (error) {
+      console.error("Email error:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send email",
+        error: error.message,
+      });
     }
     // const { subject, text, pdfBase64 } = await getApprovalEmailContent(formData.rows[0].form_data);
     // console.log(subject);
