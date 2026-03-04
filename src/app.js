@@ -1,15 +1,16 @@
 
 const client = require("./db/client");
-const express = require("express")
-const cors = require("cors")
-const { randomUUID } = require("crypto")
+const express = require("express");
+const cors = require("cors");
+const { randomUUID } = require("crypto");
+const { sendApprovalEmail } = require('./services/email-service');
 
-const app = express()
+const app = express();
 
-require("dotenv").config()
+require("dotenv").config();
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 
 
@@ -93,9 +94,54 @@ app.post("/post-prescription", async (req, res) => {
   }
 });
 
-app.listen(3000, (err) => {
+app.post("/send-form-email", async (req, res) => {
+  try {
+    const { to, formId, firstName } = req.body;
+    if (!formId) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required field: formId",
+      });
+    }
+    const toEmail = process.env.VITE_EMAIL_TO;
+    if (!toEmail) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing recipient: provide 'to' in body or set EMAIL_TO / VITE_EMAIL_TO",
+      });
+    }
+    let formData = await client.query(`SELECT form_data FROM RxForm WHERE form_id = $1`, [formId]);
+    console.log(formData);
+    console.log(formData.rows[0].form_data);
+    let res = await sendApprovalEmail(toEmail, formData.rows[0].form_data);
+    console.log(res);
+    if(res){
+      let status = res.httpStatusCode;
+      if(status == 200){
+        return { success: true, message: "Email sent", data: res };
+      } else {
+        return { success: false, message: "Failed to send email", data: res };
+      }
+    } else {
+      return { success: false, message: "Failed to send email", data: res };
+    }
+    // const { subject, text, pdfBase64 } = await getApprovalEmailContent(formData.rows[0].form_data);
+    // console.log(subject);
+    // console.log(text);
+    // console.log(pdfBase64.slice(0, 50));
+    // await sendEmailWithAttachment(toEmail, subject, text, pdfBase64 || null);
+  } catch (err) {
+    console.error("send-form-email error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to send email",
+    });
+  }
+});
+
+app.listen(4000, (err) => {
   if (err) {
     return process.exit(1)
   }
-  console.log(`RxForm Backend Running:`, 3000);
+  console.log(`RxForm Backend Running:`, 4000);
 })

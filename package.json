@@ -4,14 +4,19 @@
     "build": "esbuild src/app.js --bundle --platform=node --outfile=dist/app.js --format=esm"
   },
   "dependencies": {
-    "esbuild": "0.27.3",
+    "@aws-sdk/client-ses": "^3.1000.0",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "crypto": "^1.0.1",
     "dotenv": "^17.3.1",
+    "esbuild": "0.27.3",
     "express": "^5.2.1",
     "helmet": "^8.1.0",
+    "nodemailer": "^8.0.1",
+    "nodemailer-ses-transport": "^1.5.1",
+    "pdfkit": "^0.17.2",
     "pg": "^8.18.0",
+    "puppeteer": "^24.38.0",
     "uuid": "^13.0.0"
   }
 }
