@@ -56,7 +56,7 @@ async function generatePDFBase64(formData) {
         const pdfBuffer = await page.pdf({
             format: 'A4',
             printBackground: true,
-            margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' },
+            margin: { top: '2mm', right: '2mm', bottom: '2mm', left: '2mm' },
         });
 
         if (!pdfBuffer || pdfBuffer.length === 0) {
